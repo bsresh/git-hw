@@ -61,6 +61,8 @@
 
 ## Ответ:
 
+**[Ссылка на коммит](https://github.com/bsresh/git-hw/commit/e3de938fddf9c6aeed0576d1d23f2ae97a934079)**
+
 ---
 
 ### Задание 3
