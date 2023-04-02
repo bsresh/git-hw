@@ -44,6 +44,8 @@
 
 ## Ответ:
 
+**[Ссылка на коммит](https://github.com/bsresh/git-hw/commit/1c10a0013e11efad20f1bcf63d1538edc1133ae4)**
+
 ---
 
 ### Задание 2
