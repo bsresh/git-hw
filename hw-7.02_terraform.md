@@ -64,4 +64,64 @@
 
 ### Ответ:
 
+    get https://hashicorp-releases.yandexcloud.net/terraform/1.4.4/terraform_1.4.4_linux_amd64.zip
+
+![Скриншот 1](./img/hw_img-7.02_terraform/screenshot_1.png)
+
+
+
+    zcat terraform_1.4.4_linux_amd64.zip > terraform
+    sudo mv ./terraform /usr/local/bin/
+    cd /usr/local/bin/
+    ls -lap
+    sudo chmod 766 terraform
+    ls -lap
+    cd ~
+    terraform --version
+
+
+![Скриншот 2](./img/hw_img-7.02_terraform/screenshot_2.png)
+
+
+
+Далее для настройки зеркала в дириктории `~/` создадим файл .terraformrc со следующим содержимым:
+
+      provider_installation {
+        network_mirror {
+          url = "https://terraform-mirror.yandexcloud.net/"
+          include = ["registry.terraform.io/*/*"]
+        }
+        direct {
+          exclude = ["registry.terraform.io/*/*"]
+        }
+      }
+
+
+![Скриншот 3](./img/hw_img-7.02_terraform/screenshot_3.png)
+
+
+
+Далее для проверки работы Terraform создадим конфигурационный файл main.tf со следующим содержимым:
+
+      terraform {
+        required_providers {
+          yandex = {
+            source = "yandex-cloud/yandex"
+          }
+        }
+      }
+
+![Скриншот 4](./img/hw_img-7.02_terraform/screenshot_4.png)
+
+
+
+Затем выполним команду
+
+    terraform init
+
+![Скриншот 5](./img/hw_img-7.02_terraform/screenshot_5.png)
+
+
+Terraform установлен.
+
 ---
