@@ -1,0 +1,6 @@
+- hosts: net1
+  tasks:
+    - name: Copy site files.
+      copy:
+        src: ~/hw-terraform/site/
+        dest: /var/www/html/

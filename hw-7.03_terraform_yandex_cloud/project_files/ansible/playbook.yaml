@@ -1,0 +1,18 @@
+- name: "Install packages"
+  hosts: webservers
+  remote_user: user
+  gather_facts: true
+  become: yes
+
+  tasks:
+  - name: "Ensure that nginx is installed"
+    apt:
+      name:
+        - nginx
+      state: latest
+  - name: "Start nginx"
+    service:
+      name: nginx
+      state: started
+      enabled: yes
+  
