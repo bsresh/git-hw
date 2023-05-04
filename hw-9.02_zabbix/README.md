@@ -33,9 +33,9 @@ wget https://repo.zabbix.com/zabbix/6.4/debian/pool/main/z/zabbix-release/zabbix
 sudo dpkg -i zabbix-release_6.4-1+debian11_all.deb
 sudo apt update
 ```
-Устанавливаем Zabbix сервер и веб-интерфейс
+Устанавливаем Zabbix сервер и веб-интерфейс.
 ```
-apt install zabbix-server-pgsql zabbix-frontend-php php7.4-pgsql zabbix-apache-conf zabbix-sql-scripts zabbix-agent
+apt install zabbix-server-pgsql zabbix-frontend-php php7.4-pgsql zabbix-apache-conf zabbix-sql-scripts
 ```
 Создаём пользователя базы данных:
 ```
@@ -55,8 +55,8 @@ DBPassword=password
 ```
 Запускаем Zabbix Server и web-сервер
 ```
-sudo systemctl restart zabbix-server apache2 zabbix-agent
-sudo systemctl enable zabbix-server apache2 zabbix-agent
+sudo systemctl restart zabbix-server apache2
+sudo systemctl enable zabbix-server apache2
 ```
 Далее настраиваем подключение web-интерфейса к PostgreSQL. Web-интерфейс доступен по ссылке http://<ip_сервера>/zabbix
 
@@ -105,3 +105,50 @@ sudo systemctl enable zabbix-server apache2 zabbix-agent
 4. Приложите в файл README.md текст использованных команд в GitHub
 
 ### Ответ:
+Устанавливаем Zabbix Agent на первую виртуальную машину, на которой уже установлен Zabbix Server:
+```
+sudo apt install zabbix-agent
+```
+Запускаем Zabbix-agent:
+```
+sudo systemctl restart zabbix-agent
+sudo systemctl enable zabbix-agent
+```
+Также устанавливаем zabbix-agent на вторую виртуальную машину:
+```
+wget https://repo.zabbix.com/zabbix/6.4/debian/pool/main/z/zabbix-release/zabbix-release_6.4-1+debian11_all.deb
+sudo dpkg -i zabbix-release_6.4-1+debian11_all.deb
+sudo apt update
+sudo apt install zabbix-agent
+sudo systemctl restart zabbix-agent
+sudo systemctl enable zabbix-agent
+```
+На второй виртуальной машине в конфигурационном файле /etc/zabbix/zabbix_agentd.conf в разделе Server добавим адрес zabbix-сервера, с которого zabbix-agent будет принимать подключения:
+```
+sudo nano /etc/zabbix/zabbix_agentd.conf
+```
+
+```
+Server=192.168.0.110
+```
+Далее перезапускаем zabbix-agent:
+```
+sudo systemctl restart zabbix-agent
+```
+Далее добавляем Zabbix agent в web-интерфейсе. 
+
+На скриншоте ниже видно, что агенты подключены к серверу.
+
+![Скриншот-9](./img/9.png)
+
+Cкриншот лога zabbix agent для хоста Zabbix server:
+![Скриншот-10](./img/10.png)
+
+Cкриншот лога zabbix agent для хоста hw-zabbix-agent:
+![Скриншот-11](./img/11.png)
+
+Cкриншот раздела Monitoring > Latest data для хоста Zabbix server
+![Скриншот-12](./img/12.png)
+
+Cкриншот раздела Monitoring > Latest data для хоста hw-zabbix-agent
+![Скриншот-13](./img/13.png)
