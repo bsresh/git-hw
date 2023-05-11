@@ -15,6 +15,8 @@
 
 ### Ответ:
 
+![Скриншот-1](./img/a1.png)
+
 ---
 
 ### Задание 2
@@ -30,6 +32,8 @@
 - [ ] Прикрепите к файлу README.md скриншот systemctl status node-exporter, где будет написано: node-exporter.service — Node Exporter Netology Lesson 9.4 — [Ваши ФИО]
 
 ### Ответ:
+
+![Скриншот-2](./img/b1.png)
 
 ---
 
@@ -47,3 +51,7 @@
 - [ ] Прикрепите к файлу README.md скриншот из интерфейса Prometheus вкладки Status > Targets, чтобы было видно минимум два эндпоинта
 
 ### Ответ:
+
+![Скриншот-3](./img/c1.png)
+
+![Скриншот-4](./img/c2.png)
