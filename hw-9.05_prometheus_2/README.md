@@ -9,11 +9,11 @@
 ### Ответ:
 
 Создаём файл с правилом оповещения:
-![Скриншот-1](/img/a1.png)
+![Скриншот-1](./img/a1.png)
 
 Затем добавляем его в конфигурационный файл prometheus.yml в разделе rule_files:
 
-![Скриншот-2](/img/a2.png)
+![Скриншот-2](./img/a2.png)
 
 Затем перезапускаем Prometheus
 ```
@@ -27,7 +27,7 @@ systemctl status node-exporter
 ```
 Далее проверяем оповещение в Prometheus в разделе Alerts
 
-![Скриншот-3](/img/a3.png)
+![Скриншот-3](./img/a3.png)
 
 ---
 
@@ -39,9 +39,9 @@ systemctl status node-exporter
 
 ### Ответ:
 
-![Скриншот 1](/img/b1.png)
+![Скриншот 1](./img/b1.png)
 
-![Скриншот 2](/img/b2.png)
+![Скриншот 2](./img/b2.png)
 
 ---
 
@@ -54,6 +54,6 @@ systemctl status node-exporter
 
 ### Ответ:
 
-![Скриншот 1](/img/c1.png)
+![Скриншот 1](./img/c1.png)
 
-![Скриншот 2](/img/c2.png)
+![Скриншот 2](./img/c2.png)
