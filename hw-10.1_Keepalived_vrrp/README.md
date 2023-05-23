@@ -47,5 +47,60 @@ virtual_ipaddress {
 
 ### Ответ:
 
-![Скриншот-1](./img/a1.png)
+Конфигурационный файл /etc/keepalived/keepalived.conf для первой ноды:
+
+```
+vrrp_instance test {
+state MASTER
+interface enp0s9
+virtual_router_id 11
+priority 110
+advert_int 5
+authentication {
+auth_type AH
+auth_pass 1111
+}
+unicast_src_ip 192.168.102.1
+unicast_peer {
+192.168.102.2
+}
+virtual_ipaddress {
+192.168.102.200 dev enp0s9 label enp0s9:vip
+}
+}
+
+```
+
+Конфигурационный файл /etc/keepalived/keepalived.conf для второй ноды:
+
+```
+vrrp_instance test {
+state BACKUP
+interface enp0s9
+virtual_router_id 11
+priority 50
+advert_int 5
+authentication {
+auth_type AH
+auth_pass 1111
+}
+unicast_src_ip 192.168.102.2
+unicast_peer {
+192.168.102.1
+}
+virtual_ipaddress {
+192.168.102.200 dev enp0s9 label enp0s9:vip
+}
+}
+
+```
+Запускаем сервис keepalived на обеих нодах, выполнив команду sudo systemctl start keepalived. 
+
+Статус сервиса keepalived для первой ноды:
+
+![Скриншот-1](./img/node1.png)
+
+Статус сервиса keepalived для второй ноды:
+
+![Скриншот-2](./img/node2.png)
 
