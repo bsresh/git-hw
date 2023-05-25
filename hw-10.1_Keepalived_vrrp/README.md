@@ -50,19 +50,18 @@ virtual_ipaddress {
 Конфигурационный файл /etc/keepalived/keepalived.conf для первой ноды:
 
 ```
-vrrp_instance test {
 state MASTER
 interface enp0s9
 virtual_router_id 11
 priority 110
-advert_int 5
+advert_int 4
 authentication {
 auth_type AH
 auth_pass 1111
 }
-unicast_src_ip 192.168.102.1
+unicast_src_ip 192.168.101.1
 unicast_peer {
-192.168.102.2
+192.168.101.2
 }
 virtual_ipaddress {
 192.168.102.200 dev enp0s9 label enp0s9:vip
@@ -79,14 +78,14 @@ state BACKUP
 interface enp0s9
 virtual_router_id 11
 priority 50
-advert_int 5
+advert_int 4
 authentication {
 auth_type AH
 auth_pass 1111
 }
-unicast_src_ip 192.168.102.2
+unicast_src_ip 192.168.101.2
 unicast_peer {
-192.168.102.1
+192.168.101.1
 }
 virtual_ipaddress {
 192.168.102.200 dev enp0s9 label enp0s9:vip
