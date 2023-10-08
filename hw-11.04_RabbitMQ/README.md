@@ -41,6 +41,93 @@ $ pip install pika
 Для закрепления материала можете попробовать модифицировать скрипты, чтобы поменять название очереди и отправляемое сообщение.
 
 ### Ответ:
+Создадим файл producer.py со скриптом:
+```
+#!/usr/bin/env python
+# coding=utf-8
+import pika
+
+credentials = pika.PlainCredentials('admin', 'kukushka')
+parameters = pika.ConnectionParameters('192.168.1.108', 5672, '/', credentials)
+connection = pika.BlockingConnection(parameters)
+channel = connection.channel()
+channel.queue_declare(queue='hello')
+channel.basic_publish(exchange='', routing_key='hello', body='Hello Netology!')
+connection.close()
+```
+Далее создадим файл consumer.py со скриптом:
+```
+#!/usr/bin/env python
+# coding=utf-8
+import pika
+
+credentials = pika.PlainCredentials('admin', 'kukushka')
+parameters = pika.ConnectionParameters('192.168.1.108', 5672, '/', credentials)
+connection = pika.BlockingConnection(parameters)
+channel = connection.channel()
+channel.queue_declare(queue='hello')
+channel.basic_publish(exchange='', routing_key='hello', body='Hello Netology!')
+connection.close()
+```
+Затем для проведения тестовой отправки запустим первый скрипт producer.py
+```
+python3 ./producer.py
+```
+Oчередь под названием hello представлена на скриншоте:
+
+![Oчередь под названием hello](./img/2.png)
+
+Затем для получения сообщения запустим второй скрипт consumer.py:
+```
+python3 ./consumer.py
+```
+Результат выполнения скрипта:
+![Веб-интерфейс RabbitMQ](./img/3.png)
+
+Далее модифицируем скрипты producer.py и consumer.py: изменим название очереди и текст сообщения.
+
+producer2.py
+```
+#!/usr/bin/env python
+# coding=utf-8
+import pika
+
+credentials = pika.PlainCredentials('admin', 'kukushka')
+parameters = pika.ConnectionParameters('192.168.1.108', 5672, '/', credentials)
+connection = pika.BlockingConnection(parameters)
+channel = connection.channel()
+channel.queue_declare(queue='weather')
+channel.basic_publish(exchange='', routing_key='weather', body='rain, wind')
+connection.close()
+```
+consumer2.py
+```
+#!/usr/bin/env python
+# coding=utf-8
+import pika
+
+credentials = pika.PlainCredentials('admin', 'kukushka')
+parameters = pika.ConnectionParameters('192.168.1.108', '5672', '/', credentials)
+connection = pika.BlockingConnection(parameters)
+channel = connection.channel()
+channel.queue_declare(queue='weather')
+
+def callback(ch, method, properties, body):
+    print(" [x] Received %r" % body.decode())
+
+channel.basic_consume(on_message_callback=callback, queue='weather', auto_ack=True)
+channel.start_consuming()
+```
+Несколько раз выполним скрипт producer2.py.
+![Веб-интерфейс RabbitMQ](./img/4.png)
+
+Oчередь под названием "weather" представлена на скриншоте:
+![Веб-интерфейс RabbitMQ](./img/5.png)
+
+Затем для получений сообщений из очереди запустим второй скрипт consumer2.py:
+
+![Веб-интерфейс RabbitMQ](./img/6.png)
+
 ---
 
 ### Задание 3. Подготовка HA кластера
