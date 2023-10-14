@@ -15,10 +15,6 @@
 
 1.6. Переподключитесь к базе данных от имени sys_temp.
 
-Для смены типа аутентификации с sha2 используйте запрос: 
-```sql
-ALTER USER 'sys_test'@'localhost' IDENTIFIED WITH mysql_native_password BY 'password';
-```
 1.6. По ссылке https://downloads.mysql.com/docs/sakila-db.zip скачайте дамп базы данных.
 
 1.7. Восстановите дамп в базу данных.
@@ -28,6 +24,61 @@ ALTER USER 'sys_test'@'localhost' IDENTIFIED WITH mysql_native_password BY 'pass
 *Результатом работы должны быть скриншоты обозначенных заданий, а также простыня со всеми запросами.*
 
 ### Ответ:
+
+1.1. Был поднят чистый инстанс MySQL версии 8.0.34 на виртуальной машине с операционной системой Ubuntu 22.04.
+
+1.2. Далее из командной строки была создана учётная запись sys_temp. 
+
+```
+CREATE USER 'sys_temp'@'localhost' IDENTIFIED BY 'Passw0rd';
+```
+1.3. Далее был выполнен запрос на получение списка пользователей в базе данных.
+
+```
+SELECT user, host FROM mysql.user;
+```
+![Список пользователей в базе данных](./img/1.png)
+
+1.4. Далее были даны все права для пользователя sys_temp.
+
+```
+GRANT ALL PRIVILEGES ON *.* TO 'sys_temp'@'localhost';
+```
+![GRANT ALL PRIVILEGES](./img/2.png)
+
+1.5. Получен список прав для пользователя sys_temp:
+
+```
+SHOW GRANTS FOR sys_temp@localhost;
+```
+
+![Список прав для пользователя sys_temp](./img/3.png)
+
+1.6. Затем было выполнено переподключение к базе данных от имени sys_temp.
+
+```
+mysql -h localhost -u sys_temp -p
+```
+
+![переподключение к базе данных от имени sys_temp](./img/4.png)
+
+1.7. Восстановление дампа в базу данных.
+```
+
+mysql> SOURCE ~/sakila-db/sakila-schema.sql;
+mysql> SOURCE ~/sakila-db/sakila-data.sql;
+
+```
+1.8. Просмотр всех таблиц базы данных
+
+```
+mysql> USE sakila;
+mysql> SHOW FULL TABLES;
+```
+![Просмотр всех таблиц базы данных](./img/5.png)
+
+При помощи DBeaver была получена ER-диаграмма:
+![ER-диаграмма](./img/6.png)
 
 ---
 
@@ -40,4 +91,22 @@ ALTER USER 'sys_test'@'localhost' IDENTIFIED WITH mysql_native_password BY 'pass
 customer         | customer_id
 ```
 ### Ответ:
-
+```
+Название таблицы | Название первичного ключа
+customer         | customer_id
+address          | address_id
+city             | city_id
+country          | country_id
+store            | store_id
+staff            | staff_id
+payment          | payment_id
+rental           | rental_id
+film             | film_id
+film_category    | film_id, category_id
+category         | category_id
+language         | language_id
+actor            | actor_id
+film_actor       | actor_id, film_id
+inventory        | inventory_id
+film_text        | film_id
+```
