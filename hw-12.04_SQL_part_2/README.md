@@ -29,10 +29,16 @@ WHERE cnt.customer_count > 300;
 ---
 
 ### Задание 2
-oo
+
 Получите количество фильмов, продолжительность которых больше средней продолжительности всех фильмов.
 
 ### Ответ:
+
+```SQL
+SELECT COUNT(`film_id`) FROM `film` WHERE `length` > (SELECT AVG(`length`) FROM `film`);
+```
+
+![SQL-запрос](./img/b1.png)
 
 ---
 
