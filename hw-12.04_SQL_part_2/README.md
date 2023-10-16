@@ -11,10 +11,25 @@
 
 ### Ответ:
 
+```SQL
+SELECT c.city, sf.first_name, sf.last_name, cnt.customer_count 
+FROM city c
+JOIN address a ON a.city_id = c.city_id
+JOIN store s ON s.address_id = a.address_id
+JOIN staff sf ON sf.staff_id = s.manager_staff_id
+JOIN 
+(SELECT store_id, COUNT(customer_id) AS customer_count FROM customer GROUP BY store_id) AS cnt 
+ON cnt.store_id = s.store_id
+WHERE cnt.customer_count > 300;
+
+```
+
+![SQL-запрос](./img/a1.png)
+
 ---
 
 ### Задание 2
-
+oo
 Получите количество фильмов, продолжительность которых больше средней продолжительности всех фильмов.
 
 ### Ответ:
