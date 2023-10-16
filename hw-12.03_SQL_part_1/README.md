@@ -7,10 +7,18 @@
 Получите уникальные названия районов из таблицы с адресами, которые начинаются на “K” и заканчиваются на “a” и не содержат пробелов.
 
 ### Ответ:
+
+```SQL
+SELECT DISTINCT district FROM address WHERE district LIKE 'K%a' AND district not LIKE '% %' ORDER BY district ASC;
+```
+![SQL-запрос](./img/a1.png)
+
+Другой вариант с использованием регулярного выражения:
+
 ```SQL
 SELECT DISTINCT district FROM address WHERE district REGEXP '^K[^ ]{0,}a$' ORDER BY district ASC;
 ```
-![SQL-запрос](./img/1.png)
+![SQL-запрос](./img/a2.png)
 
 ---
 
@@ -24,7 +32,7 @@ SELECT DISTINCT district FROM address WHERE district REGEXP '^K[^ ]{0,}a$' ORDER
 SELECT * FROM payment WHERE CAST(payment_date AS DATE) BETWEEN '2005-06-15' AND '2005-06-18' AND amount > 10.00;
 ```
 
-![SQL-запрос](./img/2.png)
+![SQL-запрос](./img/b1.png)
 
 ---
 
@@ -38,7 +46,7 @@ SELECT * FROM payment WHERE CAST(payment_date AS DATE) BETWEEN '2005-06-15' AND 
 SELECT * FROM rental ORDER BY id DESC LIMIT 5;
 
 ```
-![SQL-запрос](./img/3.png)
+![SQL-запрос](./img/c1.png)
 
 ---
 
@@ -61,4 +69,20 @@ WHERE active = 1 AND (first_name = 'Willie' OR first_name = 'Kelly')
 ORDER BY first_name, last_name ASC;
 
 ```
-![SQL-запрос](./img/4.png)
+![SQL-запрос](./img/d1.png)
+
+---
+
+### Задание 5*
+
+Выведите Email каждого покупателя, разделив значение Email на две отдельных колонки: в первой колонке должно быть значение, указанное до @, во второй — значение, указанное после @.
+
+### Ответ:
+
+```SQL
+SELECT SUBSTRING_INDEX(email, '@', 1), SUBSTRING_INDEX(email, '@', -1) 
+FROM customer
+ORDER BY first_name, last_name ASC;
+```
+
+![SQL-запрос](./img/e1.png)
