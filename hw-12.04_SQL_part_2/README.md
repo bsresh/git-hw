@@ -48,6 +48,14 @@ SELECT COUNT(`film_id`) FROM `film` WHERE `length` > (SELECT AVG(`length`) FROM 
 
 ### Ответ:
 
+```SQL
+SELECT MONTHNAME(`payment_date`) AS `month`, SUM(`amount`) AS `sum`, 
+COUNT(`rental_id`) AS `rental count`
+FROM `payment` GROUP BY `month` ORDER BY `sum` DESC LIMIT 1;
+```
+
+![SQL-запрос](./img/c1.png)
+
 ---
 
 
@@ -60,6 +68,20 @@ SELECT COUNT(`film_id`) FROM `film` WHERE `length` > (SELECT AVG(`length`) FROM 
 
 ### Ответ:
 
+```SQL
+SELECT s.staff_id, s.first_name AS `Имя`, s.last_name AS `Фамилия`, COUNT(p.amount) AS `Количество продаж`,
+	CASE
+		WHEN COUNT(p.amount) > 8000 THEN 'Да'
+		ELSE 'Нет'
+	END AS `Премия`
+FROM payment p
+RIGHT JOIN staff s ON s.staff_id = p.staff_id
+GROUP BY s.staff_id
+ORDER BY COUNT(p.amount) DESC;
+```
+
+![SQL-запрос](./img/d1.png)
+
 ---
 
 ### Задание 5*
@@ -67,3 +89,23 @@ SELECT COUNT(`film_id`) FROM `film` WHERE `length` > (SELECT AVG(`length`) FROM 
 Найдите фильмы, которые ни разу не брали в аренду.
 
 ### Ответ:
+
+```
+SELECT f.film_id, f.title
+FROM rental r
+RIGHT JOIN inventory i ON i.inventory_id = r.inventory_id
+RIGHT JOIN film f ON f.film_id = i.film_id
+WHERE r.rental_id IS NULL;
+```
+Другой вариант запроса:
+
+```
+SELECT f.film_id, f.title
+FROM film f
+LEFT JOIN inventory i ON i.film_id = f.film_id
+LEFT JOIN rental r ON r.inventory_id = i.inventory_id
+WHERE r.rental_id IS NULL;
+```
+![SQL-запрос](./img/e1.png)
+
+![SQL-запрос](./img/e2.png)
