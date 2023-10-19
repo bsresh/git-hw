@@ -49,9 +49,10 @@ SELECT COUNT(`film_id`) FROM `film` WHERE `length` > (SELECT AVG(`length`) FROM 
 ### Ответ:
 
 ```SQL
-SELECT MONTHNAME(`payment_date`) AS `month`, SUM(`amount`) AS `sum`, 
+SELECT DATE_FORMAT(`payment_date`, '%Y - %M') AS `month`, SUM(`amount`) AS `sum`,
 COUNT(`rental_id`) AS `rental count`
-FROM `payment` GROUP BY `month` ORDER BY `sum` DESC LIMIT 1;
+FROM `payment` GROUP BY `month` 
+ORDER BY `sum` DESC LIMIT 1;
 ```
 
 ![SQL-запрос](./img/c1.png)
