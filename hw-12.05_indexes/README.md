@@ -248,7 +248,7 @@ GROUP BY name
 Создадим индекс:
 
 ```SQL
-CREATE INDEX payment_date ON payment(payment_date);
+CREATE INDEX p_date ON payment(payment_date);
 ```
 
 Выполним запрос:
